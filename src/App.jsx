@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import Friends from "./Friends";
 import Boys from "./Boys";
 import Posts from "./Posts";
+import Comments from "./Comments"
 
 const fetchFriends = fetch("https://jsonplaceholder.typicode.com/users").then(
   (res) => res.json()
@@ -24,6 +25,9 @@ const fetchBoys = async () => {
 const fetchPosts = fetch("https://jsonplaceholder.typicode.com/posts").then(
   (res) => res.json()
 );
+
+const fetchComments=fetch("https://jsonplaceholder.typicode.com/comments")
+.then((res)=>res.json());
 
 function App() {
   const boysPromise = fetchBoys();
@@ -43,6 +47,10 @@ function App() {
   return (
     <>
       <h3>Vite + React</h3>
+
+      <Suspense fallback={<p>Comments are loading</p>}>
+        <Comments fetchComments={fetchComments}></Comments>
+      </Suspense>
 
       <Suspense fallback={<p>Posts are loading</p>}>
         <Posts fetchPosts={fetchPosts}></Posts>
